@@ -1,0 +1,75 @@
+#######################################################################
+set up a git repo
+
+clone a git repo
+git clone https://github.com/maheshGit9637/ui_uat_demo_qa.git
+
+check status 
+git status
+
+#######################################################################
+
+stage the changed file in local to git staged area
+git add <filename>
+
+stage the changed file in local to git staged area
+git add <filename>
+
+#######################################################################
+unstage the staged file in git staged area to local repo
+git reset <filename>
+
+unstage all of the staged files in git staged area to local working directory
+git reset 
+
+to remove specific file from staged area 
+like if you have staged 10 files and you want to remove one file and keep other 9 files in staged area then
+you can use git reset <filename>
+
+#######################################################################
+
+push staged files to commit area
+
+git commit -m "first commit for this project"
+
+pull back commit from commit area to staged area
+???
+
+#######################################################################
+if you have renamed the file or if you have just moved the file from one folder to another then
+use 
+git add .
+git commit -m "renamed or moved file" 
+git push
+
+#######################################################################
+git reset --hard HEAD
+
+This command will reset your working directory to the state of the last commit (HEAD), effectively discarding all changes in tracked files. Be cautious when using the --hard option, as it's not reversible, and all your changes will be lost.
+
+#######################################################################
+
+git clean -f -d
+The above command won't remove untracked files (files that are not tracked by Git but exist in your working directory). To remove untracked files, you can use the git clean command:
+
+#######################################################################
+is it a valid statement if i say we can use git reset --hard HEAD and git clean -f -d to move back to a state where i can see my git local as per last commit i did?
+
+Yes, your statement is valid. Using the combination of `git reset --hard HEAD` and `git clean -f -d` will effectively move your working directory back to the state of the last commit you made, making it identical to the state of the repository at that commit.
+
+Here's what each command does:
+
+1. `git reset --hard HEAD`: This command resets your working directory to the state of the last commit (`HEAD`). It discards all changes in tracked files and leaves your working directory in the state of the last commit. It effectively "moves back" to the state of your last commit.
+
+2. `git clean -f -d`: This command removes untracked files (`-f` forces the deletion) and untracked directories (`-d`). It ensures that there are no untracked files or directories left in your working directory. This step helps in making your working directory look exactly like the last commit, as it removes any files you may have added to your working directory but didn't commit.
+
+By using these two commands together, you essentially achieve the goal of having your working directory match the state of the last commit you made, as if no changes or additions had been made since that commit. Just be aware that both commands are irreversible, and any uncommitted changes and untracked files will be permanently discarded.
+
+#######################################################################
+
+git add <local file>
+git commit -m"adding user02 changes"
+git pull -rebase
+git push origin master
+
+can i use this approach in order to avoid merge conflicts which gets generated if i perform git push via git merge?
