@@ -73,3 +73,283 @@ git pull -rebase
 git push origin master
 
 can i use this approach in order to avoid merge conflicts which gets generated if i perform git push via git merge?
+
+#######################################################################
+
+git commands to completely undo last commit and make your directory changes free
+
+# Step 1: Reset the last commit, keeping changes in the staging area
+git reset --soft HEAD~1
+
+# Step 2: Unstage the changes to move them to the working directory
+git restore --staged .
+
+# Step 3: Discard the changes from the working directory
+git restore .
+
+# Step 4: Remove untracked files
+git clean -f
+
+# Step 5: Force push to the remote repository
+git push --force
+
+#######################################################################
+
+
+git add .   		-[this command will put all your local changes to staging area]
+git restore --staged .	-[this command will put all your staged changes to local area]
+git restore . 		-[this command will delete all your local changes if not staged]
+git clean -f		-[this command will delete all your local changes if not staged]
+
+Local Area to Staging Area - git add <file> || git add file01.txt file02.txt || git add .
+
+Staging area to local area - git restore --staged <file> || git restore --staged <file01> <file02> || git restore --staged .
+
+#######################################################################
+
+git clean -fd to remove local changes forcefully
+
+#######################################################################
+
+if you bring changes from local to staged to commit area and you again want to bring back the changes to staged area 
+
+[local working directory](changes are X) --> [staged area](staged changes are Y) --> [commit area] (commit changes are Z) 
+										      
+
+then use <git reset --soft HEAD~1>
+
+[local working directory](changes are X) --> [staged area](staged changes are Y)
+
+#######################################################################
+
+use "git diff <filename>" to check what changes are done in some file locally.
+
+
+example - 
+C:\Eclipse\project-basic-selenium-java>git diff src/main/java/project/squads/BasePage.java
+diff --git a/src/main/java/project/squads/BasePage.java b/src/main/java/project/squads/BasePage.java
+index 59bba97..d0896a0 100644
+--- a/src/main/java/project/squads/BasePage.java
++++ b/src/main/java/project/squads/BasePage.java
+@@ -17,7 +17,7 @@ public class BasePage {
+                this.driver = driverFromChildClass;
+        }
+
+-       public static void hardWait(int n) {
++       public void hardWait(int n) {
+                try {
+                        Thread.sleep(n);
+                } catch (Exception e) {
+
+C:\Eclipse\project-basic-selenium-java>
+
+#######################################################################
+To check what changes you have made to the x.txt file after adding it to the staging area, you can use the git diff command. Here’s how you can do it:
+git diff --staged x.txt
+
+#######################################################################
+
+to check which git remote repository is listening/configured in current terminal for git push
+
+git remote -v
+
+C:\Users\mahesh shelke\Desktop\admissionForm>git remote -v
+origin  https://github.com/maheshGit9637/loginForm.git (fetch)
+origin  https://github.com/maheshGit9637/loginForm.git (push)
+
+#######################################################################
+
+topic - git authentication
+to reset the git username and password in your local computer say windows 
+command - git config --global credential.helper manager-core
+
+
+above command - it configures Git to use the Git Credential Manager (GCM) for handling authentication.
+so, it basically asks git to user git credential manager feature once again for authentication and once authenticated updated the existing credentials in windows credential manager.
+
+alternatively, we can remove existing credentials by using below command 
+command - git credential-manager-core erase
+and then GCM will again prompt for authentication.
+
+#######################################################################
+topic - git log
+This command will display a list of commits along with their commit hashes, authors, dates, and commit messages, starting with the most recent commit at the top.
+
+topic - git log --oneline
+This command will display a condensed list of commits in the repository, showing each commit on a single line. It includes a shortened commit hash, followed by the commit message.
+#######################################################################
+topic - setting global username and email
+git config --global user.name "username"
+git config --global user.email "useremail"
+
+### Setting Global Username and Email in Git
+
+The commands `git config --global user.name "username"` and `git config --global user.email "user@example.com"` set the global Git configuration for the user's name and email address, which are used to identify the author of commits across all repositories on the local machine.
+
+### Configuration Location
+
+These settings are stored in the global Git configuration file, typically located at:
+- **Windows**: `C:\Users\<YourUsername>\.gitconfig`
+- **Linux/Mac**: `~/.gitconfig`
+
+You can view the contents of this file to confirm your settings.
+
+how to delete/unset the existing configs
+git config --global --unset user.name
+git config --global --unset <key> 
+key can be either user.name or user.email
+
+
+if you do not want to set the global username and useremail you can set them locally - 
+git config user.name "Local Username"
+git config user.email "localuser@example.com"
+
+how to unset them?
+git config --unset user.name
+git config --unset user.email
+
+#######################################################################
+In Git, configurations are categorized into three levels: **local**, **global**, and **system**. Each level determines the scope of settings, influencing which repositories or users the configurations will apply to.
+
+Here’s a breakdown of each configuration level with examples:
+
+### 1. Local Configuration
+
+- **Scope**: Applies only to the specific repository in which it’s set.
+- **File Location**: `.git/config` file within the repository folder.
+- **Use Case**: Useful for repository-specific settings, like setting a different username or email for different repositories (e.g., work and personal projects).
+
+#### Example Commands:
+```bash
+git config user.name "Local Repo Username"
+git config user.email "localrepo@example.com"
+```
+
+This configuration will only affect commits made in the current repository.
+
+---
+
+### 2. Global Configuration
+
+- **Scope**: Applies to the current user across all repositories on the local machine.
+- **File Location**: `~/.gitconfig` (on Linux/Mac) or `C:\Users\YourUsername\.gitconfig` (on Windows).
+- **Use Case**: Useful for settings you want to apply to all repositories for your user account, like your name and email, preferred editor, or default behavior for Git commands.
+
+#### Example Commands:
+```bash
+git config --global user.name "Global Username"
+git config --global user.email "globaluser@example.com"
+```
+
+This configuration will apply to all repositories unless overridden by a local configuration.
+
+---
+
+### 3. System Configuration
+
+- **Scope**: Applies to all users and repositories on the system (machine-wide).
+- **File Location**: `/etc/gitconfig` (Linux/Mac) or `C:\ProgramData\Git\config` (Windows).
+- **Use Case**: Typically set by system administrators to enforce settings for all users, like proxy settings for corporate environments, safe directory configurations, or other machine-wide Git settings.
+
+#### Example Commands:
+```bash
+git config --system core.editor "vim"
+git config --system http.proxy "http://proxy.example.com:8080"
+```
+
+This configuration affects all users and repositories on the system unless overridden by global or local configurations.
+
+---
+
+### Configuration Precedence
+
+When a setting is defined at multiple levels, Git uses the following order of precedence:
+1. **Local** (highest priority)
+2. **Global**
+3. **System** (lowest priority)
+
+If a setting is specified at the local level, it overrides both global and system settings. Similarly, global settings override system settings if no local configuration exists.
+
+---
+
+### Viewing Configurations at Each Level
+
+You can view configurations at different levels using:
+- **Local**:
+  ```bash
+  git config --list --local
+  ```
+- **Global**:
+  ```bash
+  git config --list --global
+  ```
+- **System**:
+  ```bash
+  git config --list --system
+  ```
+
+This structure lets you set configurations at the level that best matches your needs, providing flexibility for managing Git behavior in different environments.
+#######################################################################
+1. Global Configuration (Most Common)
+2. Local Configuration (Common in Specific Repositories)
+#######################################################################
+
+you can see user.name on GitHub with your commit message.
+
+user.name commit_message
+
+#######################################################################
+
+areas in git local working directory
+
+local working area -----> staging area ----> commit area ----> remote working area
+changed files in local directory ----> changed files are confirmed to go to commit area ----> changed files available in commit to be pushed to remote ---->remote directory where reviewed commits are stored.
+
+file_01.txt ----> git add file_01.txt ----> git commit -m "commit msg" ----> git push origin master
+----------------------------------------------------------------------------------------------------
+add single file to staging area - 
+git add file1.txt
+
+add multiple files to staging area - 
+git add file1.txt file2.txt file3.txt
+
+add all changed files to staging area
+git add .
+
+----------------------------------------------------------------------------------------------------
+add single file to staging area and then to commit area - 
+git add file1.txt
+git commit -m "add single file to staging area and then to commit area"
+
+add multiple files to staging area and then to commit area - 
+git add file1.txt file2.txt file3.txt
+git commit -m "add multiple files to staging area and then to commit area"
+
+add all changed files to staging area and then to commit area - 
+git add .
+git commit -m "add all changed files to staging area and then to commit area"
+----------------------------------------------------------------------------------------------------
+
+add single file to staging area and then take back that file again to local working area - 
+git add file1.txt
+git restore --staged file1.txt
+
+add multiple files to staging area and then take back that file again to local working area - 
+git add file1.txt file2.txt file3.txt
+git restore --staged file1.txt file2.txt file3.txt
+
+add all changed files to staging area and then take back that file again to local working area - 
+git add .
+git restore --staged .
+----------------------------------------------------------------------------------------------------
+if some files are present as locally changed and you want to discard them 
+
+file changed in local directory - file01.txt
+discard file changed in local directory - git restore file01.txt
+
+files changed in local directory - file01.txt file02.txt
+discard files changed in local directory - git restore file01.txt file02.txt
+
+files changed in local directory - n files changed
+discard files changed in local directory - git restore .
+----------------------------------------------------------------------------------------------------
