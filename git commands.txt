@@ -353,3 +353,20 @@ discard files changed in local directory - git restore file01.txt file02.txt
 files changed in local directory - n files changed
 discard files changed in local directory - git restore .
 ----------------------------------------------------------------------------------------------------
+if there are 3 commits are in local repository, which are not pushed to remote repository.
+commit_A
+commit_B
+commit_C
+
+can we take back commit_B as local changes?
+we can take commit_B using its commit hash to staging area and then to local area
+
+take commit_B from commit area to staging area - this will delete commit log from commit history and take the commit back to staging
+git reset --soft HEAD~1
+
+if there are n commits then you can take the changes back one by one
+everytime you hit "git reset --soft HEAD~1"
+each commited changes comes back to staging area
+
+----------------------------------------------------------------------------------------------------
+
