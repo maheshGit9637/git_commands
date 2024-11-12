@@ -1,0 +1,70 @@
+To manage your changes using Git stash, you can follow these steps:
+
+### 1. Stash Your Local Changes
+If you want to save your local changes without committing them, use the following command:
+
+```bash
+git stash
+```
+
+This command saves your changes in a temporary stash and reverts your working directory to match the last commit.
+
+### 2. Stash with a Message (Optional)
+If you want to label your stash for easy identification later, add a message:
+
+```bash
+git stash push -m "Your message here"
+```
+
+### 3. View Stashed Changes
+You can list all the stashed changes to see which stashes are available:
+
+```bash
+git stash list
+```
+
+Each stash will have an identifier like `stash@{0}`, `stash@{1}`, etc.
+
+### 4. Apply Stashed Changes
+To retrieve and apply the most recent stash, use:
+
+```bash
+git stash pop
+```
+
+This command will apply the changes and remove the stash from the list.
+
+Alternatively, if you don’t want to remove it from the stash list, use:
+
+```bash
+git stash apply
+```
+
+### 5. Apply a Specific Stash
+If you have multiple stashes and want to apply a specific one, use its identifier:
+
+```bash
+git stash apply stash@{1}
+```
+
+Or, to apply and delete it in one command:
+
+```bash
+git stash pop stash@{1}
+```
+
+### 6. Drop a Specific Stash (If Needed)
+To delete a specific stash without applying it:
+
+```bash
+git stash drop stash@{1}
+```
+
+### 7. Clear All Stashes
+If you want to delete all stashed changes:
+
+```bash
+git stash clear
+```
+
+Using these commands, you can save and retrieve your changes with Git stash as needed.
