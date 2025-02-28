@@ -1,0 +1,33 @@
+git checkout test                        # Switch to the test branch
+git fetch origin                          # Fetch latest remote changes
+git reset --hard origin/develop           # Reset local test branch to match remote develop
+git push --force origin test              # Force push to overwrite remote test branch
+
+
+### **Git: Reset Local and Remote Branch to Match Another Branch**  
+
+#### **Scenario:**  
+You want to make your local and remote `test` branch identical to the remote `develop` branch. This means:  
+- **Local `test` branch** should match **remote `develop`**.  
+- **Remote `test` branch** should then be updated to match this new local state.  
+
+#### **Steps to Achieve This:**  
+```sh
+git checkout test                        # Switch to the test branch
+git fetch origin                          # Fetch latest remote changes
+git reset --hard origin/develop           # Reset local test branch to match remote develop branch
+git push --force origin test              # Force push to overwrite remote test branch
+```
+
+#### **Outcome:**  
+- **Local `test` = Remote `develop`**  
+- **Remote `test` = Local `test` (which is now the same as `origin/develop`)**  
+- **Effectively, Remote `test` becomes identical to Remote `develop`**  
+
+#### **Warnings:**  
+- **This will erase any existing changes in the `test` branch** (both locally and remotely).  
+- Use `git push --force-with-lease` instead of `git push --force` to avoid accidentally overwriting new commits made by others.  
+
+---
+
+This heading should help you organize your notes. Let me know if you need refinements! 🚀
